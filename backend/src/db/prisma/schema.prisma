@@ -1,0 +1,133 @@
+datasource db {
+  provider = "postgresql" // or your preferred database
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// A patient is a user that is receiving care.
+model Patient {
+  id                 Int                @id @default(autoincrement())
+  firstName          String
+  lastName           String
+  email              String             @unique
+  phoneNumber        String?
+  dateOfBirth        DateTime
+  address            String?
+  medicalCenters     MedicalCenter[]    // Many-to-many relation
+  careTeam           CareTeam[]
+  referringProvider  ReferringProvider? @relation(fields: [referringProviderId], references: [id])
+  referringProviderId Int?
+  tasks              Task[]
+  createdAt          DateTime           @default(now())
+}
+
+// A provider is a user who is delivering care to the patient. They can host appointments with patients, order prescriptions, order labs, sign and lock notes, and more.
+model Provider {
+  id               Int       @id @default(autoincrement())
+  name             String
+  email            String    @unique
+  phoneNumber      String?
+  admin            AdminValues
+  specialty        String
+  medicalCenters   MedicalCenter[]    // Many-to-many relation
+  createdAt        DateTime  @default(now())
+}
+
+enum AdminValues {
+  global_admin
+  local_admin
+  not_admin
+}
+
+// A support member is an organization member on the support tier. They can do supporting tasks like scheduling appointments, submitting insurance claims, and more.
+model Support {
+  id               Int       @id @default(autoincrement())
+  name             String
+  email            String    @unique
+  phoneNumber      String?
+  medicalCenters   MedicalCenter[]    // Many-to-many relation
+  createdAt        DateTime  @default(now())
+  admin            AdminValues
+}
+
+// A user is a general user in the system.
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  role       UserRole
+  createdAt  DateTime @default(now())
+
+  // Define relation to Task model
+  tasks      Task[]
+}
+
+enum UserRole {
+  ADMIN
+  DOCTOR
+  NURSE
+  SUPPORT_STAFF
+  PATIENT
+}
+
+// A care team is a group of organization members that are working together to provide care to a patient.
+model CareTeam {
+  id         Int       @id @default(autoincrement())
+  name       String
+  patient    Patient[] // Many-to-many relation
+  members    String[]
+  createdAt  DateTime  @default(now())
+}
+
+// A peer group is a grouping of patients that can be used to tailor their experience on the platform.
+model PeerGroup {
+  id         Int       @id @default(autoincrement())
+  name       String
+  members    String[]
+  createdAt  DateTime  @default(now())
+}
+
+// A medical center represents a healthcare facility.
+model MedicalCenter {
+  id         Int         @id @default(autoincrement())
+  name       String
+  address    String
+  patients   Patient[]   // One-to-many relation
+  providers  Provider[]  // One-to-many relation
+  createdAt  DateTime    @default(now())
+
+  // Define relation to Support model
+  support    Support[]
+}
+
+// A task is a piece of work that needs to be done.
+model Task {
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String?
+  patient      Patient    @relation(fields: [patientId], references: [id])
+  patientId    Int        // Define the foreign key field
+  assignedTo   User?      @relation(fields: [assignedToId], references: [id])
+  assignedToId Int?       // Define the foreign key field
+  status       StatusType
+  createdAt    DateTime   @default(now())
+}
+
+enum StatusType {
+  in_progress
+  complete
+}
+
+// The referring provider is an external person or organization that you are collaborating with to take care of a patient.
+model ReferringProvider {
+  id         Int       @id @default(autoincrement())
+  name       String
+  email      String    @unique
+  phoneNumber String?
+  patients   Patient[] // Many-to-many relation
+  createdAt  DateTime  @default(now())
+}

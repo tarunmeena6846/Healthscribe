@@ -1,0 +1,327 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String
+  patients  Patient[]
+  careTeams CareTeam[]
+  chat      Chat?
+  messages  Message[]
+}
+
+model Patient {
+  id            Int             @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  dob           DateTime
+  email         String   @unique
+  phoneNumber   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  userId        Int
+  user          User             @relation(fields: [userId], references: [id])
+  allergies     Allergy[]
+  conditions    Condition[]
+  familyHistory FamilyHistory[]
+  medications   Medication[]
+  vitals        Vital[]
+  appointments  Appointment[]
+  forms         FormResponse[]
+  visitNotes    VisitNote[]
+  documents     Document[]
+  carePlans     CarePlan[]
+  prescriptions Prescription[]
+  labResults    LabResult[]
+  insurance     InsuranceClaim[]
+}
+
+model Provider {
+  id           Int             @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  phoneNumber  String
+  medicalCenters MedicalCenter[]
+  careTeams    CareTeam[]
+  appointments Appointment[]
+  chat         Chat?
+}
+
+model MedicalCenter {
+  id          Int        @id @default(autoincrement())
+  name        String
+  address     String
+  providers   Provider[]
+}
+
+model CareTeam {
+  id          Int        @id @default(autoincrement())
+  name        String
+  providers   Provider[]
+  patients    Patient[]
+  users       User[]
+}
+
+model Appointment {
+  id               Int            @id @default(autoincrement())
+  date             DateTime
+  appointmentType  AppointmentType
+  patientId        Int
+  patient          Patient         @relation(fields: [patientId], references: [id])
+  providerId       Int
+  provider         Provider        @relation(fields: [providerId], references: [id])
+  slotId           Int
+  slot             Slot            @relation(fields: [slotId], references: [id])
+  notes            VisitNote[]
+}
+
+model Slot {
+  id                Int            @id @default(autoincrement())
+  dateTime          DateTime
+  duration          Int
+  appointment       Appointment?
+}
+
+model AppointmentType {
+  id                Int            @id @default(autoincrement())
+  name              String
+  description       String
+  appointments      Appointment[]
+}
+
+model Allergy {
+  id          Int     @id @default(autoincrement())
+  name        String
+  patientId   Int
+  patient     Patient @relation(fields: [patientId], references: [id])
+}
+
+model Condition {
+  id          Int     @id @default(autoincrement())
+  name        String
+  patientId   Int
+  patient     Patient @relation(fields: [patientId], references: [id])
+}
+
+model FamilyHistory {
+  id          Int     @id @default(autoincrement())
+  relationship String
+  condition   String
+  patientId   Int
+  patient     Patient @relation(fields: [patientId], references: [id])
+}
+
+model Medication {
+  id          Int     @id @default(autoincrement())
+  name        String
+  dosage      String
+  patientId   Int
+  patient     Patient @relation(fields: [patientId], references: [id])
+}
+
+model Vital {
+  id          Int     @id @default(autoincrement())
+  type        String
+  value       String
+  recordedAt  DateTime
+  patientId   Int
+  patient     Patient @relation(fields: [patientId], references: [id])
+}
+
+model Form {
+  id          Int             @id @default(autoincrement())
+  name        String
+  versions    FormVersion[]
+}
+
+model FormVersion {
+  id          Int             @id @default(autoincrement())
+  version     Int
+  form        Form            @relation(fields: [formId], references: [id])
+  formId      Int
+  responses   FormResponse[]
+}
+
+model FormResponse {
+  id          Int             @id @default(autoincrement())
+  response    Json
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+  formVersionId Int
+  formVersion FormVersion     @relation(fields: [formVersionId], references: [id])
+}
+
+model VisitNote {
+  id          Int             @id @default(autoincrement())
+  content     String
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+  appointmentId Int
+  appointment Appointment     @relation(fields: [appointmentId], references: [id])
+}
+
+model Document {
+  id          Int             @id @default(autoincrement())
+  name        String
+  fileUrl     String
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+  templateId  Int
+  template    DocumentTemplate @relation(fields: [templateId], references: [id])
+}
+
+model DocumentTemplate {
+  id          Int             @id @default(autoincrement())
+  name        String
+  versions    DocumentTemplateVersion[]
+}
+
+model DocumentTemplateVersion {
+  id          Int             @id @default(autoincrement())
+  version     Int
+  template    DocumentTemplate @relation(fields: [templateId], references: [id])
+  templateId  Int
+  documents   Document[]
+}
+
+model CarePlan {
+  id          Int             @id @default(autoincrement())
+  name        String
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+  templateId  Int
+  template    CarePlanTemplate @relation(fields: [templateId], references: [id])
+}
+
+model CarePlanTemplate {
+  id          Int             @id @default(autoincrement())
+  name        String
+  versions    CarePlanTemplateVersion[]
+}
+
+model CarePlanTemplateVersion {
+  id          Int             @id @default(autoincrement())
+  version     Int
+  template    CarePlanTemplate @relation(fields: [templateId], references: [id])
+  templateId  Int
+  carePlans   CarePlan[]
+}
+
+model Prescription {
+  id          Int             @id @default(autoincrement())
+  name        String
+  dosage      String
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+}
+
+model LabResult {
+  id          Int             @id @default(autoincrement())
+  name        String
+  result      String
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+  observations LabObservation[]
+}
+
+model LabObservation {
+  id          Int             @id @default(autoincrement())
+  observation String
+  labResultId Int
+  labResult   LabResult       @relation(fields: [labResultId], references: [id])
+}
+
+model InsuranceClaim {
+  id          Int             @id @default(autoincrement())
+  claimNumber String
+  status      String
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+}
+
+model Chat {
+  id          Int             @id @default(autoincrement())
+  participants User[]
+  messageThreads MessageThread[]
+}
+
+model MessageThread {
+  id          Int             @id @default(autoincrement())
+  chatId      Int
+  chat        Chat            @relation(fields: [chatId], references: [id])
+  messages    Message[]
+}
+
+model Message {
+  id          Int             @id @default(autoincrement())
+  content     String
+  senderId    Int
+  sender      User            @relation(fields: [senderId], references: [id])
+  threadId    Int
+  thread      MessageThread   @relation(fields: [threadId], references: [id])
+}
+
+model Billing {
+  id          Int             @id @default(autoincrement())
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+  invoices    Invoice[]
+  superbills  Superbill[]
+}
+
+model Invoice {
+  id          Int             @id @default(autoincrement())
+  amount      Float
+  status      String
+  billingId   Int
+  billing     Billing         @relation(fields: [billingId], references: [id])
+  products    Product[]
+}
+
+model Product {
+  id          Int             @id @default(autoincrement())
+  name        String
+  price       Float
+  invoiceId   Int
+  invoice     Invoice         @relation(fields: [invoiceId], references: [id])
+}
+
+model Superbill {
+  id          Int             @id @default(autoincrement())
+  amount      Float
+  description String
+  billingId   Int
+  billing     Billing         @relation(fields: [billingId], references: [id])
+}
+
+model EligibilityCheck {
+  id          Int             @id @default(autoincrement())
+  status      String
+  patientId   Int
+  patient     Patient         @relation(fields: [patientId], references: [id])
+}
+
+model ReferringProvider {
+  id          Int             @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String   @unique
+  phoneNumber String
+  patients    Patient[]
+}
+
+model Support {
+  id          Int             @id @default(autoincrement())
+  message     String
+  userId      Int
+  user        User            @relation(fields: [userId], references: [id])
+}
