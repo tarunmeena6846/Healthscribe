@@ -1,23 +1,18 @@
 import express, { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import prisma from "../db/src/index";
+import prisma from "../../db/src/index";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  console.log("at / in auth");
-  res.status(200).send("hello from / route of auth");
-});
-
-const SECRET_KEY = "your_secret_key";
-
 // Signup
-router.post("/signup", async (req: Request, res: Response) => {
-  const { username, email, password, role } = req.body;
-  console.log(prisma);
+router.post("/create-organization", async (req: Request, res: Response) => {
+  const { name, email, phone, speciality, medicalCenters } = req.body;
+  console.log(email, medicalCenters);
   try {
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const existingUser = await prisma.organization.findUnique({
+      where: { email },
+    });
     console.log(existingUser);
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -47,6 +42,7 @@ router.post("/signup", async (req: Request, res: Response) => {
 // Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  console.log("at login", email, password);
 
   try {
     const user = await prisma.user.findUnique({ where: { email } });

@@ -25,6 +25,7 @@ const SECRET_KEY = "your_secret_key";
 // Signup
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password, role } = req.body;
+    console.log(username, email, password, role);
     try {
         const existingUser = yield index_1.default.user.findUnique({ where: { email } });
         console.log(existingUser);
@@ -53,6 +54,7 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
 // Login
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
+    console.log("at login", email, password);
     try {
         const user = yield index_1.default.user.findUnique({ where: { email } });
         if (!user) {

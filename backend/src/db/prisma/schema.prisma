@@ -24,6 +24,16 @@ model Patient {
   createdAt          DateTime           @default(now())
 }
 
+modal Organization{
+  id               Int       @id @default(autoincrement())
+  name             String
+  email            String    @unique
+  phoneNumber      String?
+  admin            String[]
+  specialty        String
+  medicalCenters   MedicalCenter[]    // Many-to-many relation
+  createdAt        DateTime  @default(now())
+}
 // A provider is a user who is delivering care to the patient. They can host appointments with patients, order prescriptions, order labs, sign and lock notes, and more.
 model Provider {
   id               Int       @id @default(autoincrement())
@@ -61,16 +71,13 @@ model User {
   password   String
   role       UserRole
   createdAt  DateTime @default(now())
-
   // Define relation to Task model
   tasks      Task[]
 }
 
 enum UserRole {
-  ADMIN
-  DOCTOR
-  NURSE
-  SUPPORT_STAFF
+  PROVIDER
+  SUPPORT
   PATIENT
 }
 
