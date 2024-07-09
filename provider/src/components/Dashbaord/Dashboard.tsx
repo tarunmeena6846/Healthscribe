@@ -3,7 +3,7 @@ import Sidebar from "../SideBar/Sidebar";
 import Contentbar from "./ContentBar";
 const Dashboard = () => {
   return (
-    <div className="flex">
+    <div className="flex divide-x divide-gray-300">
       <div className="w-1/5 h-screen">
         <Sidebar />
       </div>

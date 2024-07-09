@@ -3,7 +3,7 @@ import TopBar from "../Topbar";
 const Contentbar = () => {
   console.log("in sidebar");
   return (
-    <div className="bg-green-500 h-screen text-white">
+    <div className="bg-orange-50 h-screen text-white">
       <TopBar />
     </div>
   );
