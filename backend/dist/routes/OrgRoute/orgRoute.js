@@ -13,24 +13,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const index_1 = __importDefault(require("../../db/src/index"));
+const medicalCenter_1 = __importDefault(require("../../db/models/medicalCenter")); // Assuming you have defined Mongoose models for Organization and MedicalCenter
+const organization_1 = __importDefault(require("../../db/models/organization"));
 const router = express_1.default.Router();
 router.post("/create-organization", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("At create org");
     const { name, email, phone, specialty, medicalCenters } = req.body;
-    console.log(email, medicalCenters);
     try {
-        const createdOrganization = yield index_1.default.organization.create({
-            data: {
-                name,
-                email,
-                phoneNumber: phone,
-                admin: [email],
-                specialty,
-                medicalCenters: medicalCenters,
-            },
+        // Find medical centers by IDs (assuming medicalCenters is an array of MedicalCenter IDs)
+        const foundMedicalCenters = yield medicalCenter_1.default.find({
+            _id: { $in: medicalCenters },
         });
-        console.log(createdOrganization);
+        if (foundMedicalCenters.length !== medicalCenters.length) {
+            return res
+                .status(400)
+                .json({ error: "One or more medical centers not found" });
+        }
+        // Create new organization document
+        const newOrganization = new organization_1.default({
+            name,
+            email,
+            phoneNumber: phone,
+            admin: [email],
+            specialty,
+            medicalCenters: foundMedicalCenters.map((mc) => mc._id), // Store only IDs of medical centers
+        });
+        // Save organization to MongoDB
+        const createdOrganization = yield newOrganization.save();
         res.status(201).json({ organization: createdOrganization });
     }
     catch (error) {

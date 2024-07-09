@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const index_1 = __importDefault(require("../../db/src/index"));
+const user_1 = __importDefault(require("../../db/models/user")); // Assuming you have defined Mongoose models for User
 const router = express_1.default.Router();
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("at / in auth");
@@ -25,26 +25,27 @@ const SECRET_KEY = "your_secret_key";
 // Signup
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password, role } = req.body;
-    console.log(username, email, password, role);
     try {
-        const existingUser = yield index_1.default.user.findUnique({ where: { email } });
-        console.log(existingUser);
+        // Check if user already exists
+        const existingUser = yield user_1.default.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
         }
+        // Hash the password
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
-        const user = yield index_1.default.user.create({
-            data: {
-                username,
-                email,
-                password: hashedPassword,
-                role,
-            },
+        // Create new user
+        const newUser = new user_1.default({
+            username,
+            email,
+            password: hashedPassword,
+            role,
         });
-        const token = jsonwebtoken_1.default.sign({ userId: user.id }, SECRET_KEY, {
+        // Save user to database
+        yield newUser.save();
+        // Generate JWT token
+        const token = jsonwebtoken_1.default.sign({ userId: newUser._id }, SECRET_KEY, {
             expiresIn: "1h",
         });
-        console.log(token);
         res.status(201).json({ token });
     }
     catch (error) {
@@ -54,17 +55,19 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
 // Login
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
-    console.log("at login", email, password);
     try {
-        const user = yield index_1.default.user.findUnique({ where: { email } });
+        // Find user by email
+        const user = yield user_1.default.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
+        // Validate password
         const isValidPassword = yield bcrypt_1.default.compare(password, user.password);
         if (!isValidPassword) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
-        const token = jsonwebtoken_1.default.sign({ userId: user.id }, SECRET_KEY, {
+        // Generate JWT token
+        const token = jsonwebtoken_1.default.sign({ userId: user._id }, SECRET_KEY, {
             expiresIn: "1h",
         });
         res.status(200).json({ token });

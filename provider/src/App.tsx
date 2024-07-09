@@ -12,18 +12,29 @@ import Register from "./components/Register";
 import Landing from "./components/Landing";
 import Dashboard from "./components/Dashbaord/Dashboard";
 import Questionnaire from "./components/Dashbaord/Questionnaire";
+import NavBar from "./components/Navbar";
+import AddPatientForm from "./components/Patient/Patient";
+import MedicalCenter from "./components/MedicalCenter/Medical";
+import Provider from "./components/Provider/Provider";
+import Support from "./components/Support/Support";
 
 function App() {
   return (
     <>
       {/* <Recoil> */}
+
       <Router>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/questionnaire" element={<Questionnaire />} />
+          <Route path="/add-patient" element={<AddPatientForm />} />
+          <Route path="/add-medical-center" element={<MedicalCenter />} />
+          <Route path="/add-provider" element={<Provider />} />
+          <Route path="/add-support" element={<Support />} />
         </Routes>
         {/* </RecoilRoot> */}
       </Router>

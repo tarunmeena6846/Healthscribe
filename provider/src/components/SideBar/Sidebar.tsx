@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 const Sidebar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  //   const toggleMenu = () => {
+  //     setIsMenuOpen(!isMenuOpen);
+  //   };
 
   // Dummy patient data
   const patient = {
@@ -21,22 +21,23 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen bg-orange-50 text-black flex flex-col relative">
-      {/* Sidebar */}
+      {/* Sidebar
       <div
         className={`absolute top-0 left-0 h-full bg-orange-50 w-60 shadow-md ${
           isMenuOpen ? "block" : "hidden"
         }`}
       >
         <ul className="p-4">
-          <li className="py-2">Menu Item 1</li>
-          <li className="py-2">Menu Item 2</li>
-          <li className="py-2">Menu Item 3</li>
+          <li className="pt-6 pb-2 hover:text-gray-300">Add Patient</li>
+          <li className="py-2 hover:text-gray-300">Add Medical Center</li>
+          <li className="py-2 hover:text-gray-300">Add Provider</li>
+          <li className="py-2 hover:text-gray-300">Add Support</li>
         </ul>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="flex flex-col p-4 ">
-        {/* Hamburger Icon */}
+        {/* Hamburger Icon
         <div className="top-4 left-4 z-10 cursor-pointer" onClick={toggleMenu}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +62,7 @@ const Sidebar = () => {
               />
             )}
           </svg>
-        </div>
+        </div> */}
 
         {/* Patient Information */}
         <div className="flex flex-col items-center  my-10">

@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import prisma from "../../db/src/index";
+import UserModel from "../../db/models/user"; // Assuming you have defined Mongoose models for User
 
 const router = express.Router();
 
@@ -15,29 +15,33 @@ const SECRET_KEY = "your_secret_key";
 // Signup
 router.post("/signup", async (req: Request, res: Response) => {
   const { username, email, password, role } = req.body;
-  console.log(username, email, password, role);
+
   try {
-    const existingUser = await prisma.user.findUnique({ where: { email } });
-    console.log(existingUser);
+    // Check if user already exists
+    const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
-      data: {
-        username,
-        email,
-        password: hashedPassword,
-        role,
-      },
+    // Create new user
+    const newUser = new UserModel({
+      username,
+      email,
+      password: hashedPassword,
+      role,
     });
 
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
+    // Save user to database
+    await newUser.save();
+
+    // Generate JWT token
+    const token = jwt.sign({ userId: newUser._id }, SECRET_KEY, {
       expiresIn: "1h",
     });
-    console.log(token);
+
     res.status(201).json({ token });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -47,22 +51,24 @@ router.post("/signup", async (req: Request, res: Response) => {
 // Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log("at login", email, password);
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
+    // Find user by email
+    const user = await UserModel.findOne({ email });
 
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+    // Validate password
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "1h",
     });
 
