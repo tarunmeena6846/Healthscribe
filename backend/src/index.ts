@@ -1,12 +1,13 @@
 import express from "express";
 import cors from "cors";
 import index from "./routes/auth/index";
+import orgRoute from "./routes/OrgRoute/orgRoute";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/auth", index);
-// app.use("/data", dataRoute);
+app.use("/org", orgRoute);
 // app.use("/stripe", stripeRoutes);
 // app.use("/post", postRoute);
 // app.use("/swot", swotRoute);

@@ -24,16 +24,17 @@ model Patient {
   createdAt          DateTime           @default(now())
 }
 
-modal Organization{
+model Organization {
   id               Int       @id @default(autoincrement())
   name             String
   email            String    @unique
   phoneNumber      String?
   admin            String[]
   specialty        String
-  medicalCenters   MedicalCenter[]    // Many-to-many relation
+  medicalCenters   String[]  
   createdAt        DateTime  @default(now())
 }
+
 // A provider is a user who is delivering care to the patient. They can host appointments with patients, order prescriptions, order labs, sign and lock notes, and more.
 model Provider {
   id               Int       @id @default(autoincrement())
@@ -99,6 +100,7 @@ model PeerGroup {
 }
 
 // A medical center represents a healthcare facility.
+//TODO add organization here...one to many reltion bw org and MC
 model MedicalCenter {
   id         Int         @id @default(autoincrement())
   name       String
@@ -106,7 +108,6 @@ model MedicalCenter {
   patients   Patient[]   // One-to-many relation
   providers  Provider[]  // One-to-many relation
   createdAt  DateTime    @default(now())
-
   // Define relation to Support model
   support    Support[]
 }

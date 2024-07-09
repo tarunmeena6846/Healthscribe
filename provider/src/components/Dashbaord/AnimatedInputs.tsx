@@ -1,31 +1,23 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-const AnimatedInput = ({ placeholder }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleLineClick = () => {
-    setIsExpanded(true);
-  };
+const AnimatedInput = ({ value, onChange, placeholder }) => {
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div className="relative w-full">
       <motion.input
         type="text"
+        value={value}
+        onChange={onChange}
         placeholder={placeholder}
-        initial={{ borderBottomWidth: 0 }}
-        animate={{ borderBottomWidth: isExpanded ? 2 : 0 }}
+        className="w-full p-4 border-b-2 border-gray-300 outline-none text-xl"
+        initial={{ height: 0 }}
+        animate={{ height: "auto" }}
         transition={{ duration: 0.3 }}
-        className="w-full p-2 border-b-2 border-gray-300 outline-none focus:border-blue-500"
+        onBlur={() => !value && setIsFocused(false)}
+        autoFocus
       />
-      {!isExpanded && (
-        <div
-          onClick={handleLineClick}
-          className="absolute bottom-0 left-0 w-full h-1 bg-gray-300 cursor-pointer"
-        >
-          hello
-        </div>
-      )}
     </div>
   );
 };
