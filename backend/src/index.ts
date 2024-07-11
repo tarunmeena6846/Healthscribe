@@ -3,7 +3,10 @@ import cors from "cors";
 import index from "./routes/auth/index";
 import orgRoute from "./routes/OrgRoute/orgRoute";
 import PatientRoute from "./routes/Patient/PatientRoute";
+import dataRoute from "./routes/dataRoute/dataRoute";
 import mongoose, { Connection } from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -48,6 +51,7 @@ app.use(async (req, res, next) => {
 app.use("/auth", index);
 app.use("/org", orgRoute);
 app.use("/patient", PatientRoute);
+app.use("/data", dataRoute);
 // app.use("/stripe", stripeRoutes);
 // app.use("/post", postRoute);
 // app.use("/swot", swotRoute);

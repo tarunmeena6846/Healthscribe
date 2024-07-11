@@ -4,6 +4,8 @@ import medicalCenterModel from "../../db/models/medicalCenter";
 import CareTeamModel from "../../db/models/careTeam";
 import TaskModel from "../../db/models/Task";
 import PatientModel from "../../db/models/patient";
+import multer from "multer";
+import fs from "fs";
 // import {
 //   Patient,
 //   MedicalCenter,
@@ -97,5 +99,4 @@ router.post("/add-patient", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Could not add patient" });
   }
 });
-
 export default router;

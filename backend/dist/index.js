@@ -17,7 +17,10 @@ const cors_1 = __importDefault(require("cors"));
 const index_1 = __importDefault(require("./routes/auth/index"));
 const orgRoute_1 = __importDefault(require("./routes/OrgRoute/orgRoute"));
 const PatientRoute_1 = __importDefault(require("./routes/Patient/PatientRoute"));
+const dataRoute_1 = __importDefault(require("./routes/dataRoute/dataRoute"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
@@ -56,6 +59,7 @@ app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
 app.use("/auth", index_1.default);
 app.use("/org", orgRoute_1.default);
 app.use("/patient", PatientRoute_1.default);
+app.use("/data", dataRoute_1.default);
 // app.use("/stripe", stripeRoutes);
 // app.use("/post", postRoute);
 // app.use("/swot", swotRoute);
