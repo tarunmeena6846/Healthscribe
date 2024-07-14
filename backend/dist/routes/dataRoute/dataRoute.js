@@ -36,7 +36,11 @@ router.get("/", (req, res) => {
 });
 console.log("data route");
 router.post("/upload", upload.single("audio"), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("here");
+    // console.log(
+    //   "here",
+    //   s3.credentials.accessKeyId,
+    //   s3.credentials.secretAccessKey
+    // );
     try {
         const s3Key = req.file.key; // Get the S3 key of the uploaded file
         const s3Uri = `s3://${process.env.AWS_BUCKET_NAME}/${s3Key}`; // Construct S3 URI

@@ -35,7 +35,6 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const mongooseInstance = yield mongoose_1.default.connect(process.env.MONGODB_URL || "", {
             dbName: "avon",
-            serverSelectionTimeoutMS: 30000, // Increase timeout
         });
         cachedDb = mongooseInstance.connection;
         console.log("Connected to MongoDB");
@@ -60,10 +59,6 @@ app.use("/auth", index_1.default);
 app.use("/org", orgRoute_1.default);
 app.use("/patient", PatientRoute_1.default);
 app.use("/data", dataRoute_1.default);
-// app.use("/stripe", stripeRoutes);
-// app.use("/post", postRoute);
-// app.use("/swot", swotRoute);
-// app.use("/event", eventRoute);
 app.get("/", (req, res) => {
     res.status(200).json("server is healthy");
 });
