@@ -8,9 +8,9 @@ import os
 def start_job(job_name,media_file_uri,bucket_name, role_arn):
     print("Starting job:", job_name)
     transcribe = boto3.client('transcribe', 
-                          region_name='us-east-1',
-                          aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
-                          aws_secret_access_key=os.getenv('AWS_SECRET_KEY'))
+                          region_name='us-east-1')
+                        #   aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
+                        #   aws_secret_access_key=os.getenv('AWS_SECRET_KEY'))
     print("transceibe",transcribe)
     transcribe.start_medical_scribe_job(
         MedicalScribeJobName=job_name,
