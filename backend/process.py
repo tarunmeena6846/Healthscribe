@@ -9,7 +9,6 @@ def start_job(job_name,media_file_uri,bucket_name, role_arn):
     print("transceibe",transcribe)
     transcribe.start_medical_scribe_job(
         MedicalScribeJobName=job_name,
-        
         DataAccessRoleArn=role_arn,
         Media={'MediaFileUri': media_file_uri},
         OutputBucketName=bucket_name,

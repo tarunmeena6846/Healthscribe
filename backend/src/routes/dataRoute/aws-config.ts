@@ -1,5 +1,4 @@
 import { S3Client } from "@aws-sdk/client-s3";
-import { TranscribeClient } from "@aws-sdk/client-transcribe";
 import dotenv from "dotenv";
 dotenv.config();
 
