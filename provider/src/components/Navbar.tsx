@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { userState } from "../store/user";
+import { useRecoilState } from "recoil";
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const [isUserLoggedIn, setIsUserLoggedIn] = useRecoilState(userState);
+  console.log(isUserLoggedIn);
   const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen); // Toggle the state correctly
@@ -10,13 +13,13 @@ const NavBar = () => {
 
   const handleSignIn = () => {
     // Simulating sign-in action
-    setIsLoggedIn(true);
+    navigate("/login");
     console.log("User signed in.");
   };
 
   const handleLogout = () => {
     // Simulating logout action
-    setIsLoggedIn(false);
+    navigate("/");
     console.log("User logged out.");
   };
 
@@ -43,7 +46,7 @@ const NavBar = () => {
       </div>
 
       {/* Conditional Rendering for Sign-in/Logout Buttons */}
-      {isLoggedIn ? (
+      {isUserLoggedIn?.email != "" ? (
         <button
           className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
           onClick={handleLogout}

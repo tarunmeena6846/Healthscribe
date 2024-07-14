@@ -1,4 +1,3 @@
-import React from "react";
 import Sidebar from "../SideBar/Sidebar";
 import Contentbar from "./ContentBar";
 const Dashboard = () => {

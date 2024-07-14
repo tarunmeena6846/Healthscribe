@@ -26,7 +26,6 @@ const connectDB = async () => {
       process.env.MONGODB_URL || "",
       {
         dbName: "avon",
-        serverSelectionTimeoutMS: 30000, // Increase timeout
       }
     );
 
@@ -52,10 +51,7 @@ app.use("/auth", index);
 app.use("/org", orgRoute);
 app.use("/patient", PatientRoute);
 app.use("/data", dataRoute);
-// app.use("/stripe", stripeRoutes);
-// app.use("/post", postRoute);
-// app.use("/swot", swotRoute);
-// app.use("/event", eventRoute);
+
 app.get("/", (req, res) => {
   res.status(200).json("server is healthy");
 });

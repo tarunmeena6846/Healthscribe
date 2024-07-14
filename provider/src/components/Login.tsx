@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { userState } from "../store/user";
+import { useRecoilState } from "recoil";
 export default function Login() {
   const navigate = useNavigate();
+  const [isUserLoggedIn, setIsUserLoggedIn] = useRecoilState(userState);
+
   const [formData, setFormData] = useState({
     user: {
       username: "",
@@ -29,15 +33,14 @@ export default function Login() {
           email: formData.user.username,
           password: formData.user.password,
         }
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-        //       "Content-type": "application/json",
-        //     },
-        //   }
       );
       console.log(response);
-      if (!response) {
+      if (response.status === 201) {
+        localStorage.setItem("token", response.data.token);
+        setIsUserLoggedIn({ email: response.data.user });
+        navigate("/dashboard");
+      } else {
+        alert("Error while login");
       }
     } catch (err) {
       alert("Error while logging in");

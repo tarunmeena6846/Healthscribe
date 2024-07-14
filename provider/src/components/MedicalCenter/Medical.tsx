@@ -1,5 +1,3 @@
-// AddPatientForm.js
-
 import React, { useState } from "react";
 
 const Medical = () => {

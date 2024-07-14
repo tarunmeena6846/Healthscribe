@@ -6,7 +6,8 @@ const OrganizationSchema = new Schema({
   phoneNumber: { type: String },
   admin: [{ type: String }], // Assuming admin can have multiple emails
   specialty: { type: String, required: true },
-  medicalCenters: [{ type: Schema.Types.ObjectId, ref: "MedicalCenter" }],
+  // medicalCenters: [{ type: Schema.Types.ObjectId, ref: "MedicalCenter" }],
+  medicalCenters: [{ type: String }],
   createdAt: { type: Date, default: Date.now },
 });
 

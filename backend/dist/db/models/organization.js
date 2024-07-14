@@ -30,7 +30,8 @@ const OrganizationSchema = new mongoose_1.Schema({
     phoneNumber: { type: String },
     admin: [{ type: String }],
     specialty: { type: String, required: true },
-    medicalCenters: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "MedicalCenter" }],
+    // medicalCenters: [{ type: Schema.Types.ObjectId, ref: "MedicalCenter" }],
+    medicalCenters: [{ type: String }],
     createdAt: { type: Date, default: Date.now },
 });
 const Organization = mongoose_1.default.model("Organization", OrganizationSchema);

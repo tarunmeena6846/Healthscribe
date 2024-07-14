@@ -42,7 +42,7 @@ router.post("/signup", async (req: Request, res: Response) => {
       expiresIn: "1h",
     });
 
-    res.status(201).json({ token });
+    res.status(201).json({ token, user: email });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
@@ -72,7 +72,7 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, user: user.email });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

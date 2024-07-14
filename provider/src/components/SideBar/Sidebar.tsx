@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
 const Sidebar = () => {
-  //   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  //   const toggleMenu = () => {
-  //     setIsMenuOpen(!isMenuOpen);
-  //   };
-
   // Dummy patient data
   const patient = {
     name: "John Doe",
@@ -21,49 +15,8 @@ const Sidebar = () => {
 
   return (
     <div className="h-screen bg-orange-50 text-black flex flex-col relative">
-      {/* Sidebar
-      <div
-        className={`absolute top-0 left-0 h-full bg-orange-50 w-60 shadow-md ${
-          isMenuOpen ? "block" : "hidden"
-        }`}
-      >
-        <ul className="p-4">
-          <li className="pt-6 pb-2 hover:text-gray-300">Add Patient</li>
-          <li className="py-2 hover:text-gray-300">Add Medical Center</li>
-          <li className="py-2 hover:text-gray-300">Add Provider</li>
-          <li className="py-2 hover:text-gray-300">Add Support</li>
-        </ul>
-      </div> */}
-
       {/* Main Content */}
       <div className="flex flex-col p-4 ">
-        {/* Hamburger Icon
-        <div className="top-4 left-4 z-10 cursor-pointer" onClick={toggleMenu}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            {isMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            )}
-          </svg>
-        </div> */}
-
         {/* Patient Information */}
         <div className="flex flex-col items-center  my-10">
           {/* Avatar */}

@@ -1,6 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
-// Define your menu items in a configuration object
 const menuItems = [
   { label: "Home", href: "#home", icon: "./home.svg" },
   { label: "Schedule", href: "#schedule", icon: "./schedular.svg" },
@@ -25,22 +25,24 @@ const menuItems = [
   { label: "Bills", href: "#bills", icon: "./bill.svg" },
   { label: "Fax", href: "#fax", icon: "./fax.svg" },
 ];
-//hover:text-white hover:bg-green-500 hover:shadow-xl hover:border-black hover:border-t-4 hover:border-b-4 hover:border-r-4 hover:rounded-xl
 const TopBar = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-between items-center border bg-orange-50">
       <div className="flex divide-x divide-gray-300 w-full">
         {menuItems.map((item, index) => (
-          <a
+          <button
             key={index}
-            href={item.href}
+            onClick={() => {
+              navigate(item.href);
+            }}
             className="flex flex-1 items-center justify-center space-x-2 px-4 py-2 text-black transition-all duration-300 hover:bg-green-400"
           >
             <div className="flex flex-col items-center">
               <img src={item.icon} className="w-8 h-8" alt={item.label} />
               <span>{item.label}</span>
             </div>
-          </a>
+          </button>
         ))}
       </div>
     </div>

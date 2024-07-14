@@ -10,16 +10,16 @@ router.post("/create-organization", async (req: Request, res: Response) => {
   const { name, email, phone, specialty, medicalCenters } = req.body;
 
   try {
-    // Find medical centers by IDs (assuming medicalCenters is an array of MedicalCenter IDs)
-    const foundMedicalCenters = await medicalCenterModel.find({
-      _id: { $in: medicalCenters },
-    });
+    // // Find medical centers by IDs (assuming medicalCenters is an array of MedicalCenter IDs)
+    // const foundMedicalCenters = await medicalCenterModel.find({
+    //   _id: { $in: medicalCenters },
+    // });
 
-    if (foundMedicalCenters.length !== medicalCenters.length) {
-      return res
-        .status(400)
-        .json({ error: "One or more medical centers not found" });
-    }
+    // if (foundMedicalCenters.length !== medicalCenters.length) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "One or more medical centers not found" });
+    // }
 
     // Create new organization document
     const newOrganization = new Organization({
@@ -28,7 +28,8 @@ router.post("/create-organization", async (req: Request, res: Response) => {
       phoneNumber: phone,
       admin: [email], // Assuming the creator's email is the admin
       specialty,
-      medicalCenters: foundMedicalCenters.map((mc) => mc._id), // Store only IDs of medical centers
+      // medicalCenters: [{ type: Schema.Types.ObjectId, ref: "MedicalCenter" }],
+      medicalCenters: [medicalCenters],
     });
 
     // Save organization to MongoDB

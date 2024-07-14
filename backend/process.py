@@ -9,14 +9,10 @@ def start_job(job_name,media_file_uri,bucket_name, role_arn):
     print("transceibe",transcribe)
     transcribe.start_medical_scribe_job(
         MedicalScribeJobName=job_name,
-        # LanguageCode='en-US',
-        # MediaFormat='mp4',
+        
         DataAccessRoleArn=role_arn,
         Media={'MediaFileUri': media_file_uri},
         OutputBucketName=bucket_name,
-        # Specialty='PRIMARYCARE',  # Add the Specialty parameter
-        # Type='DICTATION',  # Add the Type parameter
-        # ContentIdentificationType='PHI',
         Settings={'ShowSpeakerLabels': False, 'ChannelIdentification': True},
         ChannelDefinitions=[
             {'ChannelId': 0, 'ParticipantRole': 'CLINICIAN'},

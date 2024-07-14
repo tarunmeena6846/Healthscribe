@@ -1,69 +1,6 @@
-// AddPatientForm.js
-
 import React, { useState } from "react";
 
 const AddPatientForm = () => {
-  //   const [formData, setFormData] = useState({
-  //     firstName: "",
-  //     lastName: "",
-  //     email: "",
-  //     phoneNumber: "",
-  //     dateOfBirth: "",
-  //     address: "",
-  //     referringProviderId: "", // Ensure you handle referring provider selection
-  //   });
-
-  //   const handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setFormData((prevFormData) => ({
-  //       ...prevFormData,
-  //       [name]: value,
-  //     }));
-  //   };
-
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     // Handle form submission (e.g., send data to backend, create patient)
-  //     console.log("Form submitted with data:", formData);
-  //     // Add your logic to send form data to backend or update state accordingly
-  //   };
-
-  //   return (
-  //     <div className="container mx-auto">
-  //       <h1 className="text-2xl font-bold mt-4 mb-8">Add Patient</h1>
-  //       <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-  //         <div className="grid grid-cols-2 gap-4">
-  //           <div>
-  //             <label
-  //               htmlFor="firstName"
-  //               className="block text-sm font-medium text-gray-700"
-  //             >
-  //               First Name
-  //             </label>
-  //             <input
-  //               type="text"
-  //               id="firstName"
-  //               name="firstName"
-  //               value={formData.firstName}
-  //               onChange={handleChange}
-  //               required
-  //               className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-  //             />
-  //           </div>
-  //           {/* Add similar input fields for other form fields */}
-  //         </div>
-
-  //         <div className="mt-6">
-  //           <button
-  //             type="submit"
-  //             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-  //           >
-  //             Add Patient
-  //           </button>
-  //         </div>
-  //       </form>
-  //     </div>
-
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",

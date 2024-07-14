@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { useRecoilState } from "recoil";
+import { userState } from "../store/user";
 const types = ["PROVIDER", "SUPPORT", "PATIENT"];
 export default function Register() {
   const navigate = useNavigate();
+  const [isUserLoggedIn, setIsUserLoggedIn] = useRecoilState(userState);
   const [formData, setFormData] = useState({
     user: {
       username: "",
@@ -44,8 +47,8 @@ export default function Register() {
 
       console.log(response);
       if (response.status === 201) {
-        localStorage.setItem("token", response.token);
-        console.log(localStorage.getItem("token"));
+        localStorage.setItem("token", response.data.token);
+        setIsUserLoggedIn({ email: response.data.user });
         navigate("/questionnaire");
       } else {
         alert("Error while registering");

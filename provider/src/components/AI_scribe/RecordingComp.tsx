@@ -59,7 +59,10 @@ const VideoUpload = () => {
             <div className="w-4 h-4 bg-blue-400 rounded-full"></div>
             <div className="w-4 h-4 bg-blue-400 rounded-full"></div>
           </div>
-          <p className="text-center mt-2">Processing...</p>
+          <p className="text-center mt-2">Please wait...</p>
+          <p className="text-center mt-2">
+            Do not refresh or go back. This may take a couple of minutes.
+          </p>
         </div>
       )}
       {uploadComplete && analysisResult && (

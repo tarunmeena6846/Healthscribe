@@ -16,4 +16,3 @@ const s3 = new client_s3_1.S3Client({
     },
 });
 exports.s3 = s3;
-console.log(process.env.AWS_ACCESS_KEY);
