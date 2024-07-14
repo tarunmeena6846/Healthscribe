@@ -9,7 +9,7 @@ export default function Register() {
       username: "",
       password: "",
       email: "",
-      role: "",
+      role: "PROVIDER",
     },
   });
 
@@ -131,7 +131,12 @@ export default function Register() {
             </div>
           </form>
           <div className="flex items-center mt-3 justify-center">
-            <button className={"justify-center text-blue-500 hover:underline"}>
+            <button
+              className={"justify-center text-blue-500 hover:underline"}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
               Already registered? Login here
             </button>
           </div>

@@ -9,7 +9,7 @@ const menuItems = [
   { label: "Tasks", href: "#tasks", icon: "./task.svg" },
   { label: "Care Plans", href: "#care-plans", icon: "./plan.svg" },
   { label: "Documents", href: "#documents", icon: "./ducment.svg" },
-  { label: "Visit Notes", href: "#visit-notes", icon: "./visit.svg" },
+  { label: "Visit Notes", href: "/visit-notes", icon: "./visit.svg" },
   {
     label: "Prescriptions",
     href: "#prescriptions",

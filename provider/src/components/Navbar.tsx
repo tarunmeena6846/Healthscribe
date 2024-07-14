@@ -82,6 +82,15 @@ const NavBar = () => {
               className="pt-6 pb-2 hover:text-gray-300"
               onClick={() => {
                 toggleMenu();
+                navigate("/dashboard");
+              }}
+            >
+              Home
+            </li>
+            <li
+              className="pb-2 hover:text-gray-300"
+              onClick={() => {
+                toggleMenu();
                 navigate("/add-patient");
               }}
             >

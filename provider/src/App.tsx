@@ -17,6 +17,7 @@ import AddPatientForm from "./components/Patient/Patient";
 import MedicalCenter from "./components/MedicalCenter/Medical";
 import Provider from "./components/Provider/Provider";
 import Support from "./components/Support/Support";
+import VisitNotes from "./components/VisitNotes";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -35,6 +36,7 @@ function App() {
           <Route path="/add-medical-center" element={<MedicalCenter />} />
           <Route path="/add-provider" element={<Provider />} />
           <Route path="/add-support" element={<Support />} />
+          <Route path="/visit-notes" element={<VisitNotes />} />
         </Routes>
         {/* </RecoilRoot> */}
       </Router>

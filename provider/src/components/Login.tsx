@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router";
 export default function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     user: {
       username: "",
@@ -93,7 +94,12 @@ export default function Login() {
             </div>
           </form>
           <div className="flex items-center mt-3 justify-center">
-            <button className={"justify-center text-blue-500 hover:underline"}>
+            <button
+              className={"justify-center text-blue-500 hover:underline"}
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
               Need to register? Sign up for free
             </button>
           </div>

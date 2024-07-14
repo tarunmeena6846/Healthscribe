@@ -105,7 +105,6 @@ const Sidebar = () => {
             <span>{patient.Caregiver}</span>
           </div>
         </div>
-        {/* Additional Content */}
       </div>
     </div>
   );

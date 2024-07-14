@@ -37,7 +37,7 @@ const Questionnaire = () => {
             email: answers[1],
             phone: answers[2],
             specialty: answers[3],
-            medicalCenters: answers[4] ? answers[4].split(",") : [], // Medical Centers (comma-separated list)
+            medicalCenters: answers[4], // Medical Centers (comma-separated list)
           },
           {
             headers: {
