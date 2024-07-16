@@ -26,13 +26,13 @@ def start_job(job_name,media_file_uri,bucket_name, role_arn):
     print("Job started:", job_name)
 
 def get_job_status(job_name):
-    transcribe = boto3.client('transcribe', region_name='us-east-1')
+    transcribe = boto3.client('transcribe', region_name='us-east-1',
+                              aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
+                              aws_secret_access_key=os.getenv('AWS_SECRET_KEY'))
     
     while True:
         response = transcribe.get_medical_scribe_job(
-            MedicalScribeJobName=job_name,
-            aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
-            aws_secret_access_key=os.getenv('AWS_SECRET_KEY'))
+            MedicalScribeJobName=job_name)
         
         
         job_status = response['MedicalScribeJob']['MedicalScribeJobStatus']
