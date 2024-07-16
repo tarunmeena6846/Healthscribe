@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 
 const Support = () => {
@@ -12,14 +10,14 @@ const Support = () => {
     medicalCenters: [],
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log("Form Data:", formData);
   };
@@ -108,7 +106,7 @@ const Support = () => {
               id="allergies"
               name="patients"
               className="shadow-sm bg-gray-50 border border-gray-300 rounded-md w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={formData.patients}
+              value={formData.name}
               onChange={handleChange}
             />
           </div>
@@ -124,7 +122,7 @@ const Support = () => {
               id="phoneNumber"
               name="phoneNumber"
               className="shadow-sm bg-gray-50 border border-gray-300 rounded-md w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              value={formData.phoneNumber}
+              value={formData.phone}
               onChange={handleChange}
             />
           </div>

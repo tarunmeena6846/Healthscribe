@@ -12,14 +12,14 @@ const AddPatientForm = () => {
     occupation: "",
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log("Form Data:", formData);
   };

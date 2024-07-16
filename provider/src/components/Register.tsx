@@ -16,7 +16,7 @@ export default function Register() {
     },
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     console.log(e.target.name);
     setFormData({
       user: {
@@ -25,7 +25,7 @@ export default function Register() {
       },
     });
   };
-  const handleRegister = async (e) => {
+  const handleRegister = async (e: any) => {
     e.preventDefault();
 
     console.log(formData.user);

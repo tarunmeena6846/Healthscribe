@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
-const AnimatedInput = ({ value, onChange, placeholder }) => {
+const AnimatedInput = ({ value, onChange, placeholder }: any) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (

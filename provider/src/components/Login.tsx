@@ -14,7 +14,7 @@ export default function Login() {
     },
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({
       user: {
         ...formData.user,
@@ -22,7 +22,7 @@ export default function Login() {
       },
     });
   };
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
 
     console.log(formData.user);

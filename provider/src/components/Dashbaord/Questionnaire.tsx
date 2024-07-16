@@ -13,14 +13,13 @@ const questions = [
 
 const Questionnaire = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState<string[]>([]);
   const navigate = useNavigate();
 
   const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAnswers({
-      ...answers,
-      [currentQuestionIndex]: e.target.value,
-    });
+    const newAnswers = [...answers];
+    newAnswers[currentQuestionIndex] = e.target.value;
+    setAnswers(newAnswers);
   };
 
   const handleNextQuestion = async () => {
@@ -28,9 +27,9 @@ const Questionnaire = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       // Handle form submission or completion
-      console.log("Form submitted:", answers[4]);
+      console.log("Form submitted:", answers);
       try {
-        const response = await axios.post(
+        const response: any = await axios.post(
           `${import.meta.env.VITE_SERVER_URL}/org/create-organization`,
           {
             name: answers[0],
