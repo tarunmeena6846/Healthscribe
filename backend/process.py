@@ -30,8 +30,10 @@ def get_job_status(job_name):
     
     while True:
         response = transcribe.get_medical_scribe_job(
-            MedicalScribeJobName=job_name
-        )
+            MedicalScribeJobName=job_name,
+            aws_access_key_id=os.getenv('AWS_ACCESS_KEY'),
+            aws_secret_access_key=os.getenv('AWS_SECRET_KEY'))
+        
         
         job_status = response['MedicalScribeJob']['MedicalScribeJobStatus']
         
