@@ -1,6 +1,6 @@
-# AVON
+# Healthscribe
 
-Avon is no-code/low-code platform to build custom EMR.
+healthscribe is no-code/low-code platform to build custom EMR.
 
 ## Tech Stack
 
